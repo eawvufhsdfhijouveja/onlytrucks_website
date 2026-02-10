@@ -1,633 +1,236 @@
-/* ==================== ROOT & VARIABLES ==================== */
-:root {
-    --primary-color: #FF8C00;
-    --primary-dark: #E67E00;
-    --bg-color: #0A0E27;
-    --bg-secondary: #1A1F3A;
-    --bg-tertiary: #252D48;
-    --text-primary: #FFFFFF;
-    --text-secondary: #B0B8D4;
-    --border-color: #2A3150;
-    --success-color: #4CAF50;
-    --error-color: #F44336;
-}
+// ==================== MODAL FUNCTIONALITY ====================
+const discordModal = document.getElementById('discordModal');
+const applyBtns = document.querySelectorAll('#applyBtn, #applyBtnHero');
+const closeBtn = document.querySelector('.close');
 
-/* ==================== GLOBAL STYLES ==================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// Open modal on page load
+window.addEventListener('load', () => {
+    // Voeg een kleine vertraging toe zodat het natuur voelt
+    setTimeout(() => {
+        discordModal.classList.add('active');
+    }, 500);
+});
 
-html {
-    scroll-behavior: smooth;
-}
+// Open modal when clicking apply button
+applyBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        discordModal.classList.add('active');
+    });
+});
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    line-height: 1.6;
-}
+// Close modal when clicking the X
+closeBtn.addEventListener('click', () => {
+    discordModal.classList.remove('active');
+});
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* ==================== TYPOGRAPHY ==================== */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-h1 {
-    font-size: 2.5rem;
-}
-
-h2 {
-    font-size: 2rem;
-}
-
-h3 {
-    font-size: 1.5rem;
-}
-
-p {
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: var(--primary-dark);
-}
-
-/* ==================== BUTTONS ==================== */
-.btn {
-    display: inline-block;
-    padding: 12px 28px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: #000;
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(255, 140, 0, 0.4);
-}
-
-.btn-discord {
-    background-color: #5865F2;
-    color: white;
-}
-
-.btn-discord:hover {
-    background-color: #4752C4;
-}
-
-/* ==================== NAVIGATION ==================== */
-.navbar {
-    background-color: var(--bg-secondary);
-    border-bottom: 2px solid var(--primary-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 70px;
-}
-
-.nav-logo {
-    display: flex;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.logo-img {
-    height: 50px;
-    width: auto;
-    margin-right: 12px;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-menu a {
-    color: var(--text-secondary);
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-menu a:hover {
-    color: var(--primary-color);
-}
-
-.apply-btn {
-    background-color: var(--primary-color);
-    color: #000;
-    padding: 8px 16px;
-    border-radius: 3px;
-    font-weight: 600;
-}
-
-.apply-btn:hover {
-    background-color: var(--primary-dark);
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background-color: var(--primary-color);
-    margin: 5px 0;
-    transition: 0.3s;
-}
-
-/* Mobile Navigation */
-@media (max-width: 768px) {
-    .nav-menu {
-        position: absolute;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background-color: var(--bg-secondary);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        padding: 2rem 0;
-        gap: 0;
+// Close modal when clicking outside of it
+window.addEventListener('click', (e) => {
+    if (e.target === discordModal) {
+        discordModal.classList.remove('active');
     }
+});
 
-    .nav-menu.active {
-        left: 0;
+// ==================== HAMBURGER MENU ====================
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+
+// Close menu when clicking on a link
+const navLinks = navMenu.querySelectorAll('a');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+});
+
+// ==================== FAQ ACCORDION ====================
+const faqQuestions = document.querySelectorAll('.faq-question');
+
+faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const answer = question.nextElementSibling;
+
+        // Close other open items
+        faqQuestions.forEach(otherQuestion => {
+            if (otherQuestion !== question) {
+                otherQuestion.classList.remove('active');
+                otherQuestion.parentElement.classList.remove('active');
+                otherQuestion.nextElementSibling.classList.remove('active');
+            }
+        });
+
+        // Toggle current item
+        question.classList.toggle('active');
+        faqItem.classList.toggle('active');
+        answer.classList.toggle('active');
+    });
+});
+
+// ==================== GALLERY FUNCTIONALITY ====================
+const galleryContainer = document.getElementById('galleryContainer');
+const imageModal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+const imageModalClose = document.querySelector('.image-modal-close');
+
+// Gallery data structure
+// Voeg hier je afbeeldingen toe per maand
+const galleryData = {
+    'Februari 2026': [
+        'INSERT_IMAGE_URL_1',
+        'INSERT_IMAGE_URL_2',
+        // Voeg meer afbeeldingen toe
+    ],
+    'Januari 2026': [
+        'INSERT_IMAGE_URL_1',
+        // Voeg meer afbeeldingen toe
+    ]
+};
+
+// Render gallery
+function renderGallery() {
+    galleryContainer.innerHTML = '';
+    
+    Object.entries(galleryData).forEach(([month, images]) => {
+        // Skip maanden zonder afbeeldingen
+        if (images.length === 0) return;
+
+        const monthSection = document.createElement('div');
+        monthSection.className = 'gallery-month';
+
+        const monthTitle = document.createElement('h3');
+        monthTitle.textContent = month;
+        monthSection.appendChild(monthTitle);
+
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'gallery-grid';
+
+        images.forEach(imageUrl => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = `Gallery image from ${month}`;
+
+            img.addEventListener('click', () => {
+                modalImage.src = imageUrl;
+                imageModal.classList.add('active');
+            });
+
+            item.appendChild(img);
+            gridContainer.appendChild(item);
+        });
+
+        monthSection.appendChild(gridContainer);
+        galleryContainer.appendChild(monthSection);
+    });
+}
+
+// Close image modal
+if (imageModalClose) {
+    imageModalClose.addEventListener('click', () => {
+        imageModal.classList.remove('active');
+    });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === imageModal) {
+        imageModal.classList.remove('active');
     }
+});
 
-    .nav-menu li {
-        padding: 1rem 0;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
+// Render gallery on page load
+if (galleryContainer) {
+    renderGallery();
 }
 
-/* ==================== HERO SECTION ==================== */
-.hero {
-    position: relative;
-    height: 600px;
-    background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-tertiary) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-bottom: 3px solid var(--primary-color);
+// ==================== STATS API (Placeholder) ====================
+// Vervang deze met je werkelijke Trucksbook API call
+function updateStats() {
+    // Voorbeeld: vervang dit met je API call
+    const totalDistance = document.getElementById('totalDistance');
+    const totalDrivers = document.getElementById('totalDrivers');
+    const jobsCompleted = document.getElementById('jobsCompleted');
+
+    if (totalDistance) totalDistance.textContent = '0 KM';
+    if (totalDrivers) totalDrivers.textContent = '0';
+    if (jobsCompleted) jobsCompleted.textContent = '0';
+
+    // Hier kun je je Trucksbook API call toevoegen:
+    // fetch('YOUR_API_ENDPOINT')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         totalDistance.textContent = data.distance + ' KM';
+    //         totalDrivers.textContent = data.drivers;
+    //         jobsCompleted.textContent = data.jobs;
+    //     })
+    //     .catch(error => console.error('Error fetching stats:', error));
 }
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.1) 0%, transparent 50%);
-    z-index: 0;
-}
+// Update stats on page load
+window.addEventListener('load', updateStats);
 
-.hero-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    animation: fadeInUp 0.8s ease;
-}
+// ==================== CONTACT FORM ====================
+const contactForm = document.getElementById('contactForm');
 
-.hero-logo {
-    height: 120px;
-    width: auto;
-    margin-bottom: 2rem;
-    animation: bounce 3s infinite;
-}
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--primary-color), #FFB347);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        const formMessage = document.getElementById('formMessage');
 
-.slogan {
-    font-size: 1.3rem;
-    color: var(--primary-color);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
+        // Validate form
+        if (!name || !email || !subject || !message) {
+            formMessage.textContent = 'Vul alstublieft alle velden in';
+            formMessage.className = 'error';
+            formMessage.style.display = 'block';
+            return;
+        }
 
-.hero-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-}
+        // Hier kun je je form submission handler toevoegen
+        // Voor nu, tonen we alleen een success message
+        formMessage.textContent = 'Bedankt voor je bericht! We nemen binnenkort contact op.';
+        formMessage.className = 'success';
+        formMessage.style.display = 'block';
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        // Reset form
+        contactForm.reset();
 
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-}
+        // Hide message after 5 seconds
+        setTimeout(() => {
+            formMessage.style.display = 'none';
+        }, 5000);
 
-/* ==================== STATISTICS SECTION ==================== */
-.statistics {
-    background-color: var(--bg-secondary);
-    padding: 4rem 0;
-    border-top: 2px solid var(--primary-color);
-}
-
-.statistics h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2rem;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.stat-card {
-    background-color: var(--bg-tertiary);
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-    border: 2px solid var(--border-color);
-    transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.2);
-}
-
-.stat-icon {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.stat-card h3 {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.stat-card p {
-    font-size: 1rem;
-    color: var(--text-secondary);
-}
-
-.stats-note {
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    font-style: italic;
-}
-
-/* ==================== PAGE HEADER ==================== */
-.page-header {
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-    padding: 4rem 0;
-    text-align: center;
-    border-bottom: 2px solid var(--primary-color);
-}
-
-.page-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.page-header p {
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-}
-
-.page-content {
-    padding: 3rem 0;
-}
-
-/* ==================== ABOUT PAGE ==================== */
-.about-section {
-    background-color: var(--bg-secondary);
-    padding: 2rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--primary-color);
-}
-
-.about-section h2 {
-    color: var(--primary-color);
-    margin-top: 2rem;
-}
-
-.about-section h2:first-child {
-    margin-top: 0;
-}
-
-.values-list {
-    list-style: none;
-    margin: 2rem 0;
-}
-
-.values-list li {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    background-color: var(--bg-tertiary);
-    border-left: 3px solid var(--primary-color);
-    border-radius: 4px;
-}
-
-.values-list strong {
-    color: var(--primary-color);
-}
-
-/* ==================== TEAM PAGE ==================== */
-.team-section {
-    padding: 2rem 0;
-}
-
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.team-member {
-    background-color: var(--bg-secondary);
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-    border: 2px solid var(--border-color);
-    transition: all 0.3s ease;
-}
-
-.team-member:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.2);
-}
-
-.member-image {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 1.5rem;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid var(--primary-color);
-}
-
-.member-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.team-member h3 {
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.team-member .role {
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-/* ==================== RULES PAGE ==================== */
-.rules-section {
-    padding: 2rem 0;
-}
-
-.rule-card {
-    background-color: var(--bg-secondary);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--primary-color);
-    transition: all 0.3s ease;
-}
-
-.rule-card:hover {
-    transform: translateX(5px);
-    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.15);
-}
-
-.rule-card h3 {
-    color: var(--primary-color);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.rule-card i {
-    font-size: 1.5rem;
-}
-
-.rules-footer {
-    background-color: var(--bg-secondary);
-    padding: 2rem;
-    margin-top: 2rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--error-color);
-    color: var(--text-primary);
-}
-
-/* ==================== FAQ PAGE ==================== */
-.faq-section {
-    padding: 2rem 0;
-}
-
-.faq-item {
-    margin-bottom: 1rem;
-    background-color: var(--bg-secondary);
-    border-radius: 8px;
-    overflow: hidden;
-    border: 2px solid var(--border-color);
-    transition: all 0.3s ease;
-}
-
-.faq-question {
-    width: 100%;
-    padding: 1.5rem;
-    background-color: var(--bg-secondary);
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.faq-question:hover {
-    background-color: var(--bg-tertiary);
-    color: var(--primary-color);
-}
-
-.faq-question i {
-    color: var(--primary-color);
-    transition: transform 0.3s ease;
-}
-
-.faq-answer {
-    padding: 1.5rem;
-    background-color: var(--bg-tertiary);
-    color: var(--text-secondary);
-    display: none;
-    border-top: 2px solid var(--border-color);
-}
-
-.faq-answer.active {
-    display: block;
-}
-
-.faq-question.active i {
-    transform: rotate(180deg);
-}
-
-.faq-item.active {
-    border-color: var(--primary-color);
-}
-
-/* ==================== GALLERY PAGE ==================== */
-.gallery-section {
-    padding: 2rem 0;
-}
-
-.gallery-month {
-    margin-bottom: 3rem;
-}
-
-.gallery-month h3 {
-    color: var(--primary-color);
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--primary-color);
-    margin-bottom: 2rem;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 2px solid var(--border-color);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    height: 250px;
-}
-
-.gallery-item:hover {
-    border-color: var(--primary-color);
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.3);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.1);
-}
-
-/* Image Modal */
-.image-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-}
-
-.image-modal.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        // Voorbeeld: fetch call naar je backend
+        // fetch('/api/contact', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ name, email, subject, message })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     formMessage.textContent = 'Bedankt voor je bericht!';
+        //     formMessage.className = 'success';
+        //     formMessage.style.display = 'block';
+        //     contactForm.reset();
+        // })
+        // .catch(error => {
+        //     formMessage.textContent = 'Er is een fout opgetreden. Probeer het later opnieuw.';
+        //     formMessage.className = 'error';
+        //     formMessage.style.display = 'block';
+        // });
+    });
 }
