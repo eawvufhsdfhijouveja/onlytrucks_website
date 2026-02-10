@@ -1,236 +1,1041 @@
-// ==================== MODAL FUNCTIONALITY ====================
-const discordModal = document.getElementById('discordModal');
-const applyBtns = document.querySelectorAll('#applyBtn, #applyBtnHero');
-const closeBtn = document.querySelector('.close');
+/* ==================== ROOT & VARIABLES ==================== */
+:root {
+    --primary-color: #FF8C00;
+    --primary-dark: #E67E00;
+    --bg-color: #0A0E27;
+    --bg-secondary: #1A1F3A;
+    --bg-tertiary: #252D48;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B0B8D4;
+    --border-color: #2A3150;
+    --success-color: #4CAF50;
+    --error-color: #F44336;
+}
 
-// Open modal on page load
-window.addEventListener('load', () => {
-    // Voeg een kleine vertraging toe zodat het natuur voelt
-    setTimeout(() => {
-        discordModal.classList.add('active');
-    }, 500);
-});
+/* ==================== GLOBAL STYLES ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-// Open modal when clicking apply button
-applyBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        discordModal.classList.add('active');
-    });
-});
+html {
+    scroll-behavior: smooth;
+}
 
-// Close modal when clicking the X
-closeBtn.addEventListener('click', () => {
-    discordModal.classList.remove('active');
-});
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
 
-// Close modal when clicking outside of it
-window.addEventListener('click', (e) => {
-    if (e.target === discordModal) {
-        discordModal.classList.remove('active');
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+h1 {
+    font-size: 2.8rem;
+}
+
+h2 {
+    font-size: 2.2rem;
+}
+
+h3 {
+    font-size: 1.6rem;
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* ==================== BUTTONS ==================== */
+.btn {
+    display: inline-block;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #000;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 140, 0, 0.4);
+}
+
+.btn-discord {
+    background-color: #5865F2;
+    color: white;
+}
+
+.btn-discord:hover {
+    background-color: #4752C4;
+}
+
+/* ==================== MODAL (DISCORD POP-UP) ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-secondary);
+    padding: 0;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
     }
-});
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-// ==================== HAMBURGER MENU ====================
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('navMenu');
+.close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+.close:hover {
+    color: var(--primary-dark);
+}
 
-// Close menu when clicking on a link
-const navLinks = navMenu.querySelectorAll('a');
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
+.modal-body {
+    padding: 3rem 2.5rem;
+    text-align: center;
+}
 
-// ==================== FAQ ACCORDION ====================
-const faqQuestions = document.querySelectorAll('.faq-question');
+.modal-logo {
+    max-height: 100px;
+    width: auto;
+    margin-bottom: 1.5rem;
+}
 
-faqQuestions.forEach(question => {
-    question.addEventListener('click', () => {
-        const faqItem = question.parentElement;
-        const answer = question.nextElementSibling;
+.modal-body h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
 
-        // Close other open items
-        faqQuestions.forEach(otherQuestion => {
-            if (otherQuestion !== question) {
-                otherQuestion.classList.remove('active');
-                otherQuestion.parentElement.classList.remove('active');
-                otherQuestion.nextElementSibling.classList.remove('active');
-            }
-        });
+.modal-body p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
 
-        // Toggle current item
-        question.classList.toggle('active');
-        faqItem.classList.toggle('active');
-        answer.classList.toggle('active');
-    });
-});
+.modal-body .btn {
+    margin-top: 1.5rem;
+    width: 100%;
+}
 
-// ==================== GALLERY FUNCTIONALITY ====================
-const galleryContainer = document.getElementById('galleryContainer');
-const imageModal = document.getElementById('imageModal');
-const modalImage = document.getElementById('modalImage');
-const imageModalClose = document.querySelector('.image-modal-close');
+/* ==================== NAVIGATION ==================== */
+.navbar {
+    background-color: var(--bg-secondary);
+    border-bottom: 2px solid var(--primary-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
 
-// Gallery data structure
-// Voeg hier je afbeeldingen toe per maand
-const galleryData = {
-    'Februari 2026': [
-        'INSERT_IMAGE_URL_1',
-        'INSERT_IMAGE_URL_2',
-        // Voeg meer afbeeldingen toe
-    ],
-    'Januari 2026': [
-        'INSERT_IMAGE_URL_1',
-        // Voeg meer afbeeldingen toe
-    ]
-};
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
 
-// Render gallery
-function renderGallery() {
-    galleryContainer.innerHTML = '';
+.nav-logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    margin-right: 12px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
+
+.apply-btn {
+    background-color: var(--primary-color);
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.apply-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: absolute;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--bg-secondary);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        padding: 2rem 0;
+        gap: 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu li {
+        padding: 1rem 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    min-height: 500px;
+    max-height: 700px;
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-tertiary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.1) 0%, transparent 50%);
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    animation: fadeInUp 0.8s ease;
+}
+
+.hero-logo {
+    height: 100px;
+    width: auto;
+    margin-bottom: 1.5rem;
+    animation: bounce 3s infinite;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(135deg, var(--primary-color), #FFB347);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.slogan {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-secondary);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* ==================== STATISTICS SECTION ==================== */
+.statistics {
+    background-color: var(--bg-secondary);
+    padding: 4rem 0;
+    border-top: 2px solid var(--primary-color);
+}
+
+.statistics h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: var(--bg-tertiary);
+    padding: 2.5rem 2rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.2);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.stat-card h3 {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.stat-card p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+.stats-note {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
     
-    Object.entries(galleryData).forEach(([month, images]) => {
-        // Skip maanden zonder afbeeldingen
-        if (images.length === 0) return;
-
-        const monthSection = document.createElement('div');
-        monthSection.className = 'gallery-month';
-
-        const monthTitle = document.createElement('h3');
-        monthTitle.textContent = month;
-        monthSection.appendChild(monthTitle);
-
-        const gridContainer = document.createElement('div');
-        gridContainer.className = 'gallery-grid';
-
-        images.forEach(imageUrl => {
-            const item = document.createElement('div');
-            item.className = 'gallery-item';
-
-            const img = document.createElement('img');
-            img.src = imageUrl;
-            img.alt = `Gallery image from ${month}`;
-
-            img.addEventListener('click', () => {
-                modalImage.src = imageUrl;
-                imageModal.classList.add('active');
-            });
-
-            item.appendChild(img);
-            gridContainer.appendChild(item);
-        });
-
-        monthSection.appendChild(gridContainer);
-        galleryContainer.appendChild(monthSection);
-    });
-}
-
-// Close image modal
-if (imageModalClose) {
-    imageModalClose.addEventListener('click', () => {
-        imageModal.classList.remove('active');
-    });
-}
-
-window.addEventListener('click', (e) => {
-    if (e.target === imageModal) {
-        imageModal.classList.remove('active');
+    .hero {
+        aspect-ratio: 16 / 10;
     }
-});
-
-// Render gallery on page load
-if (galleryContainer) {
-    renderGallery();
 }
 
-// ==================== STATS API (Placeholder) ====================
-// Vervang deze met je werkelijke Trucksbook API call
-function updateStats() {
-    // Voorbeeld: vervang dit met je API call
-    const totalDistance = document.getElementById('totalDistance');
-    const totalDrivers = document.getElementById('totalDrivers');
-    const jobsCompleted = document.getElementById('jobsCompleted');
-
-    if (totalDistance) totalDistance.textContent = '0 KM';
-    if (totalDrivers) totalDrivers.textContent = '0';
-    if (jobsCompleted) jobsCompleted.textContent = '0';
-
-    // Hier kun je je Trucksbook API call toevoegen:
-    // fetch('YOUR_API_ENDPOINT')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         totalDistance.textContent = data.distance + ' KM';
-    //         totalDrivers.textContent = data.drivers;
-    //         jobsCompleted.textContent = data.jobs;
-    //     })
-    //     .catch(error => console.error('Error fetching stats:', error));
+/* ==================== PAGE HEADER ==================== */
+.page-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    padding: 3rem 0;
+    text-align: center;
+    border-bottom: 2px solid var(--primary-color);
 }
 
-// Update stats on page load
-window.addEventListener('load', updateStats);
+.page-header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.8rem;
+}
 
-// ==================== CONTACT FORM ====================
-const contactForm = document.getElementById('contactForm');
+.page-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
 
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+.page-content {
+    padding: 3rem 0;
+    min-height: 60vh;
+}
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-        const formMessage = document.getElementById('formMessage');
+/* ==================== ABOUT PAGE ==================== */
+.about-section {
+    background-color: var(--bg-secondary);
+    padding: 2.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
 
-        // Validate form
-        if (!name || !email || !subject || !message) {
-            formMessage.textContent = 'Vul alstublieft alle velden in';
-            formMessage.className = 'error';
-            formMessage.style.display = 'block';
-            return;
-        }
+.about-section h2 {
+    color: var(--primary-color);
+    margin-top: 2rem;
+    font-size: 2rem;
+}
 
-        // Hier kun je je form submission handler toevoegen
-        // Voor nu, tonen we alleen een success message
-        formMessage.textContent = 'Bedankt voor je bericht! We nemen binnenkort contact op.';
-        formMessage.className = 'success';
-        formMessage.style.display = 'block';
+.about-section h2:first-child {
+    margin-top: 0;
+}
 
-        // Reset form
-        contactForm.reset();
+.about-section p {
+    font-size: 1rem;
+    line-height: 1.8;
+}
 
-        // Hide message after 5 seconds
-        setTimeout(() => {
-            formMessage.style.display = 'none';
-        }, 5000);
+.values-list {
+    list-style: none;
+    margin: 2rem 0;
+}
 
-        // Voorbeeld: fetch call naar je backend
-        // fetch('/api/contact', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ name, email, subject, message })
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     formMessage.textContent = 'Bedankt voor je bericht!';
-        //     formMessage.className = 'success';
-        //     formMessage.style.display = 'block';
-        //     contactForm.reset();
-        // })
-        // .catch(error => {
-        //     formMessage.textContent = 'Er is een fout opgetreden. Probeer het later opnieuw.';
-        //     formMessage.className = 'error';
-        //     formMessage.style.display = 'block';
-        // });
-    });
+.values-list li {
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    background-color: var(--bg-tertiary);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.values-list strong {
+    color: var(--primary-color);
+}
+
+/* ==================== TEAM PAGE ==================== */
+.team-section {
+    padding: 2rem 0;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+.team-member {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.team-member:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.2);
+}
+
+.member-image {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--primary-color);
+    flex-shrink: 0;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-member h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+.team-member .role {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 1024px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== RULES PAGE ==================== */
+.rules-section {
+    padding: 2rem 0;
+}
+
+.rule-card {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.rule-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.15);
+}
+
+.rule-card h3 {
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.rule-card i {
+    font-size: 1.5rem;
+}
+
+.rule-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.rules-footer {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--error-color);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ==================== FAQ PAGE ==================== */
+.faq-section {
+    padding: 2rem 0;
+}
+
+.faq-item {
+    margin-bottom: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: var(--bg-secondary);
+    border: none;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--primary-color);
+}
+
+.faq-question i {
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.faq-answer {
+    padding: 1.5rem;
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    display: none;
+    border-top: 2px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+.faq-answer.active {
+    display: block;
+}
+
+.faq-question.active i {
+    transform: rotate(180deg);
+}
+
+.faq-item.active {
+    border-color: var(--primary-color);
+}
+
+/* ==================== GALLERY PAGE ==================== */
+.gallery-section {
+    padding: 2rem 0;
+}
+
+.gallery-month {
+    margin-bottom: 3.5rem;
+}
+
+.gallery-month h3 {
+    color: var(--primary-color);
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+}
+
+.gallery-item:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.3);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Image Modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    align-items: center;
+    justify-content: center;
+}
+
+.image-modal.active {
+    display: flex;
+}
+
+.image-modal-close {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 2001;
+}
+
+.image-modal-close:hover {
+    color: var(--primary-dark);
+}
+
+#modalImage {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+}
+
+/* ==================== CONTACT PAGE ==================== */
+.contact-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    padding: 2rem 0;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info-box {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.info-box:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.15);
+}
+
+.info-box i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.info-box h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.info-box p {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.contact-form-container {
+    background-color: var(--bg-secondary);
+    padding: 2.5rem;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+.contact-form-container h2 {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.8rem 1rem;
+    background-color: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
+}
+
+.contact-form button {
+    align-self: flex-start;
+}
+
+#formMessage {
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#formMessage.success {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+#formMessage.error {
+    background-color: rgba(244, 67, 54, 0.2);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
+@media (max-width: 1024px) {
+    .contact-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+    background-color: var(--bg-secondary);
+    border-top: 2px solid var(--primary-color);
+    padding: 3rem 0 1.5rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.7rem;
+}
+
+.footer-section ul li a {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: var(--primary-color);
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: var(--primary-color);
+    color: #000;
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 600px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .nav-container {
+        padding: 0 15px;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+
+    .modal-body {
+        padding: 2rem 1.5rem;
+    }
 }
