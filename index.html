@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyTrucks NL - Virtual Trucking Company</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Discord Pop-up Modal -->
+    <div id="discordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <img src="insert image name here" alt="OnlyTrucks NL Logo" class="modal-logo">
+                <h2>Welkom bij OnlyTrucks NL</h2>
+                <p>Sluit je aan bij onze groeiende community van truckers!</p>
+                <p>Kom direct naar onze Discord en word onderdeel van het OnlyTrucks NL gezin.</p>
+                <a href="INSERT_DISCORD_LINK_HERE" target="_blank" class="btn btn-discord">
+                    <i class="fab fa-discord"></i> Join Discord Server
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="insert image name here" alt="OnlyTrucks NL Logo" class="logo-img">
+                <span>OnlyTrucks NL</span>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="about.html">Over Ons</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="rules.html">Regels</a></li>
+                <li><a href="faq.html">Veelgestelde Vragen</a></li>
+                <li><a href="gallery.html">Galerij</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#" class="apply-btn" id="applyBtn">Solliciteer</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <img src="insert image name here" alt="OnlyTrucks NL Logo" class="hero-logo">
+            <h1>OnlyTrucks NL</h1>
+            <p class="slogan">slogan</p>
+            <p class="hero-subtitle">Een VTC waar vriendschap centraal staat</p>
+            <a href="#" class="btn btn-primary" id="applyBtnHero">Solliciteer Nu</a>
+        </div>
+        <div class="hero-overlay"></div>
+    </header>
+
+    <!-- Statistics Section -->
+    <section class="statistics">
+        <div class="container">
+            <h2>OnlyTrucks NL Statistieken</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3 id="totalDistance">0 KM</h3>
+                    <p>Totaal Gereden</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 id="totalDrivers">0</h3>
+                    <p>Actieve Chauffeurs</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3 id="jobsCompleted">0</h3>
+                    <p>Ritten Voltooid</p>
+                </div>
+            </div>
+            <p class="stats-note">*Statistieken van Trucksbook API</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>OnlyTrucks NL</h4>
+                    <p>slogan</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="about.html">Over Ons</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Volg Ons</h4>
+                    <div class="social-links">
+                        <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 OnlyTrucks NL. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
